@@ -6,20 +6,20 @@ from dotenv import load_dotenv
 import os
 from flask_migrate import Migrate
 
-#  Corrected MySQL Connection String
+# Load environment variables
 load_dotenv()
+
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://aimapogeestudios.com"}})
 
-
+# Configure database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
 
 # Database Models
 class Visitor(db.Model):
