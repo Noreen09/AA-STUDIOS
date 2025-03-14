@@ -4,6 +4,7 @@ from flask_cors import CORS
 import traceback
 from dotenv import load_dotenv
 import os
+from flask_migrate import Migrate
 
 #  Corrected MySQL Connection String
 load_dotenv()
@@ -17,6 +18,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize database
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
 
 # Database Models
 class Visitor(db.Model):
