@@ -5,12 +5,13 @@ import traceback
 from dotenv import load_dotenv
 import os
 
-# Initialize Flask app
-app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})  # Change '*' to your frontend domain in production
-
 #  Corrected MySQL Connection String
 load_dotenv()
+# Initialize Flask app
+app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
