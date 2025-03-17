@@ -14,12 +14,14 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://aimapogeestudios.com"}})
 
 # Configure database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")  # Added this line
 
 # Initialize database
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db)  # No need for db.create_all()
+
 
 class Visitor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,10 +44,6 @@ class Order(db.Model):
     budget = db.Column(db.String(50), nullable=False)
     services = db.Column(db.Text, nullable=False)  # Stored as comma-separated values
     submission_date = db.Column(db.DateTime, default=db.func.current_timestamp())
-
-#  Create database tables
-with app.app_context():
-    db.create_all()
 
 # Routes
 
